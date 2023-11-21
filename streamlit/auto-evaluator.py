@@ -12,6 +12,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.evaluation.qa import QAEvalChain
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from langchain.chains.question_answering import load_qa_chain
 from langchain.retrievers.self_query.base import SelfQueryRetriever
 from kor_retriever_lex import kor_retriever
@@ -277,6 +278,8 @@ if uploaded_eval_set and pc_api_key and pc_region and pc_index:
     # Set embeddings (must match your Pinecone DB)
     if embeddings == "OpenAI":
         embedding = OpenAIEmbeddings()
+    elif embeddings == "MPNet":
+        embedding = SentenceTransformerEmbeddings('sentence-transformers/all-mpnet-base-v2')
     elif embeddings == "HuggingFace":
         embedding = HuggingFaceEmbeddings()
 

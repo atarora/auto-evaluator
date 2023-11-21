@@ -35,6 +35,7 @@ from fastapi import FastAPI, File, UploadFile, Form
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains.question_answering import load_qa_chain
 from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
+from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from text_utils import GRADE_DOCS_PROMPT, GRADE_ANSWER_PROMPT, GRADE_DOCS_PROMPT_FAST, GRADE_ANSWER_PROMPT_FAST, GRADE_ANSWER_PROMPT_BIAS_CHECK, GRADE_ANSWER_PROMPT_OPENAI, QA_CHAIN_PROMPT, QA_CHAIN_PROMPT_LLAMA
 
 def generate_eval(text, chunk, logger):
@@ -128,6 +129,8 @@ def make_retriever(splits, retriever_type, embeddings, num_neighbors, llm, logge
     # Set embeddings
     if embeddings == "OpenAI":
         embd = OpenAIEmbeddings()
+    elif embeddings == "MPNet":
+        embd = SentenceTransformerEmbeddings()
     # Note: Still WIP (can't be selected by user yet)
     elif embeddings == "LlamaCppEmbeddings":
         embd = LlamaCppEmbeddings(model="replicate/vicuna-13b:e6d469c2b11008bb0e446c3e9629232f9674581224536851272c54871f84076e")
